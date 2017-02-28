@@ -1,0 +1,72 @@
+%% File 'sample.tex'
+%% 
+%% Copyright (C) 2003 by Maarten Sneep <sneep@nat.vu.nl>
+%% Modified 2004 by B.Ph. van Milligen <boudewijn.vanmilligen@ciemat.es>
+%% 
+%% This file may be distributed and/or modified under the conditions of
+%% the LaTeX Project Public License, either version 1.2 of this license
+%% or (at your option) any later version.  The latest version of this
+%% license is in:
+%% 
+%%    http://www.latex-project.org/lppl.txt
+%% 
+%% and version 1.2 or later is part of all distributions of LaTeX version
+%% 1999/12/01 or later.
+%% 
+\documentclass{epsconf}
+\usepackage{graphicx}
+%\usepackage{epsfig} % use this package to include EPS format figures
+\usepackage{wrapfig}
+\usepackage{amsmath}
+\usepackage{hyperref}
+
+\title{Realtime capable quasilinear gyrokinetic modelling using neural networks}
+\author{\underline{K.L. van de Plassche}$^{1,2}$, J. Citrin$^2$, C. Bourdelle$^3$, V. Dagnelie$^2$, A. Ho$^2$}
+\institute{$^1$ University of Technology Eindhoven, PO Box 513, 5600 MB Eindhoven, The Netherlands\\
+$^2$ DIFFER, PO Box 6336, 5600 HH Eindhoven, The Netherlands\\
+$^3$ CEA, IRFM, F-13108 Saint-Paul-lez-Durance, France.}
+
+\begin{document}
+\maketitle
+Quasilinear gyrokinetic models have been very successful in predicting particle and heat transport in tokamaks, and in reproducing experimental profiles in many cases. While an impressive six orders of magnitude faster than local nonlinear gyrokinetics, they are still too slow for efficient scenario optimization applications and realtime control. For example, using the QuaLiKiz \cite{qualikiz} quasilinear transport code, $1$ second of JET evolution demands $\sim 2 \times 10^3$ turbulent flux calculations, which results in $\sim 10$ hour simulation time on 10 cores. Significant speedup is still required for control and rapid shot scenario development.\newline \indent
+In this study, we propose to use neural networks to emulate QuaLiKiz. This final step gives an additional six orders of magnitude speedup, which bridges the gap to realtime modelling. We base our work on the successful proof of concept \cite{qlknn}, in which a multilayer perceptron neural network was able to reproduce QuaLiKiz heat fluxes as a function of ion temperature gradient, ion-electron temperature ratio, safety factor and magnetic shear. In this work, we generalize this 4D input neural network to 10D by adding electron temperature gradient, density gradient, minor radius, collisionality and $Z_{eff}$ as input. Additionally, the impact of rotational flow shear is included via a new linear quench rule developed from set linear-GENE simulations \cite{gene}. The final neural network predicts electron and ion heat flux, particle diffusion, and particle pinch.\newline \indent
+The training set, consisting of a 9D hyperrectangle of $3 \times 10^8$ evaluations within experimentally relevant ranges, was generated using $1.5$ MCPh using the Edison supercomputer of the Berkeley National Energy Research Scientific Computing Center. The network training was done using the TensorFlow framework \cite{tflow}. This network will be extended to a larger input dimensionality ($\sim$ 20D) \cite{ho}, and the network is being coupled to the RAPTOR fast tokamak simulator \cite{raptor}.
+
+%\begin{wrapfigure}{r}{70mm}\centering
+%\vspace{0cm} % Adjust vertical figure placement
+%\begin{figure}[h]\centering
+%\includegraphics[width=90mm]{bokeh_plot}
+%\caption{\it \small QuaLiKiz vs Neural Network prediction (placeholder)}
+%\label{fig:flow} 
+%\end{figure}
+%\vspace{0cm} % Adjust vertical figure spacing
+%\end{wrapfigure}
+\newcommand{\etal}{\textit{et al.}}
+\begin{thebibliography}{99}
+%\bibitem{jet}
+%B Baiocchi et al PPCF {\bf 57} 035003 (2015)
+%\bibitem{qualikiz}
+%C Bourdelle et al Phys. Plasmas {\bf 14} 112501 (2007) 
+\bibitem{qualikiz}
+C. Bourdelle \etal, PPCF {\bf 58}, 014036 (2016)
+\bibitem{qlknn}
+J. Citrin \etal, Nucl. Fusion {\bf 55}, 092001 (2015)
+\bibitem{gene}
+F. Jenko \etal, Phys. Plasmas {\bf 7}, 1904 (2000) \url{http://genecode.org}
+\bibitem{tflow}
+M. Abadi \etal, {Tensorflow r1.0} (2017) \url{http://tensorflow.org}
+\bibitem{raptor}
+F. Felici \etal, Plasma Physics and Controlled Fusion {\bf 54}, 2 (2012)
+\bibitem{ho}
+A. Ho \etal, this conference (EPS Belfast 2017)
+
+%\bibitem{Interestingpaper}
+%A. First, B.C. Second and D. Third, Journal of interesting papers {\bf 10}, 10 (2004)
+%\bibitem{Anotherpaper}
+%A. First, B.C. Second and D. Third, Journal of interesting papers {\bf 11}, 11 (2004)
+\end{thebibliography}
+
+\end{document}
+\endinput
+%%
+%% End of file `sample.tex'.
